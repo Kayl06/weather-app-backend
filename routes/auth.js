@@ -11,7 +11,7 @@ const authController = require("../controller/auth");
 router.post(
   "/signup",
   [
-    body('username')
+    body("username")
       .isEmail()
       .withMessage("Please enter a valid email username.")
       .custom(async (username) => {
@@ -19,11 +19,15 @@ router.post(
         if (user[0].length > 0) {
           return Promise.reject("Username already exist.");
         }
-      })
-      .normalizeEmail(),
-    body('password').trim().isLength({ min: 7 }),
+      }),
+    body("password").trim().isLength({ min: 7 }),
   ],
   authController.signup
 );
+
+router.post(
+  "/login",
+  authController.login
+)
 
 module.exports = router;
